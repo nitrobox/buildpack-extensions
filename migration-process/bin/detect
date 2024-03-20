@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Always pass detection
+exit 0

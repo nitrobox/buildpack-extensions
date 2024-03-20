@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Capture the arguments
+layers_dir="$1"
+
+# Create a launch.toml file if it doesn't exist
+launch_toml="${layers_dir}/launch.toml"
+
+# Append the new process to the launch.toml
+cat >> "$launch_toml" <<EOL
+[[processes]]
+type = "migration"
+command = "java"
+args = ["-Dspring.main.web-application-type=none", "-Dspring.jms.listener.auto-startup=false", "-Dspring.main.lazy-initialization=true", "-cp", "/workspace/BOOT-INF/classes/:/workspace/BOOT-INF/lib/*", "de.nitrobox.service.authshadow.MigrationApplication"]
+direct = true
+default = false
+EOL
+
+exit 0

@@ -1,0 +1,4 @@
+[[processes]]
+type = "migration"
+command = "java org.springframework.boot.loader.launch.JarLauncher /workspace"
+direct = true
