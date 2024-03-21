@@ -1,9 +1,10 @@
 api = "0.7"
 
 [buildpack]
-id = "com.nitrobox.liquibase.migration"
+id = "nitrobox/buildpacks/spring/liquibase"
 version = "1.0.0"
 name = "Liquibase migration Process"
+optional = true
 
 [[stacks]]
   id = "*"

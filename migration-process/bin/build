@@ -1,13 +1,23 @@
 #!/usr/bin/env bash
 
+echo "Extension to create the liquidbase migration process"
 
-echo "Extension to create the Liquidbase Migration task"
 BASE_PATH="./BOOT-INF/classes/"
-# Capture the arguments
-layers_dir="$1"
+
+LAYERS_DIR="$1"
+
+# Actually belongs into the detect script but, bootBuildImage does not support optional buildpacks atm.
+FOUND_LINES=$(find $BASE_PATH -name '*MigrationApplication*' | wc -l)
+
+if [[ $FOUND_LINES != 1 ]]; then
+  echo "Migration not found or more than one. Skipping."
+  exit 0
+fi
+
+
 
 # Create a launch.toml file if it doesn't exist
-launch_toml="${layers_dir}/launch.toml"
+LAUNCH_TOML="${LAYERS_DIR}/launch.toml"
 FOUND_CLASS=$(find $BASE_PATH -name '*MigrationApplication*')
 echo "Found MigrationApplication class: $FOUND_CLASS"
 
@@ -18,7 +28,7 @@ SANITIZED_CLASS=${SANITIZED_CLASS//\//.} # replace slashes with dots
 echo "Using $SANITIZED_CLASS in migration command"
 
 # Append the new process to the launch.toml
-cat >> "$launch_toml" <<EOL
+cat >> "$LAUNCH_TOML" <<EOL
 [[processes]]
 type = "migration"
 command = "java"
