@@ -1,9 +1,9 @@
 api = "0.7"
 
 [buildpack]
-id = "com.example.myinlinebuildpack"
-version = "0.0.1"
-name = "My Inline Buildpack"
+id = "com.nitrobox.liquibase.migration"
+version = "1.0.0"
+name = "Liquibase migration Process"
 
 [[stacks]]
   id = "*"

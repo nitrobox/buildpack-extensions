@@ -1,17 +1,28 @@
 #!/usr/bin/env bash
 
+
+echo "Extension to create the Liquidbase Migration task"
+BASE_PATH="./BOOT-INF/classes/"
 # Capture the arguments
 layers_dir="$1"
 
 # Create a launch.toml file if it doesn't exist
 launch_toml="${layers_dir}/launch.toml"
+FOUND_CLASS=$(find $BASE_PATH -name '*MigrationApplication*')
+echo "Found MigrationApplication class: $FOUND_CLASS"
+
+SANITIZED_CLASS=${FOUND_CLASS//".class"/} #Remove .class suffix
+SANITIZED_CLASS=${SANITIZED_CLASS//"$BASE_PATH"/} # .remove leading path
+SANITIZED_CLASS=${SANITIZED_CLASS//\//.} # replace slashes with dots
+
+echo "Using $SANITIZED_CLASS in migration command"
 
 # Append the new process to the launch.toml
 cat >> "$launch_toml" <<EOL
 [[processes]]
 type = "migration"
 command = "java"
-args = ["-Dspring.main.web-application-type=none", "-Dspring.jms.listener.auto-startup=false", "-Dspring.main.lazy-initialization=true", "-cp", "/workspace/BOOT-INF/classes/:/workspace/BOOT-INF/lib/*", "de.nitrobox.service.authshadow.MigrationApplication"]
+args = ["-Dspring.main.web-application-type=none", "-Dspring.jms.listener.auto-startup=false", "-Dspring.main.lazy-initialization=true", "-cp", "/workspace/BOOT-INF/classes/:/workspace/BOOT-INF/lib/*", "$SANITIZED_CLASS"]
 direct = true
 default = false
 EOL
