@@ -43,5 +43,6 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - name: Tag as latest
         run: |
-          docker tag ${{ steps.package.outputs.bp_image_name }} ${{  steps.package.outputs.bp_package }}:latest
+          docker pull ${{ steps.package.outputs.bp_image_name }}
+          docker tag ${{ steps.package.outputs.bp_image_name }} ${{ steps.package.outputs.bp_package }}:latest
           docker push ${{  steps.package.outputs.bp_package }}:latest
