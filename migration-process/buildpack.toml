@@ -6,9 +6,9 @@ version = "1.0.1"
 name = "Liquibase migration Process"
 optional = true
 
+[[stacks]]
+  id = "*"
+
 [[targets]]
   arch = "amd64"
   os = "linux"
-
-[[stacks]]
-  id = "*"
