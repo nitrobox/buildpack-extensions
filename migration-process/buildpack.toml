@@ -2,7 +2,7 @@ api = "0.7"
 
 [buildpack]
 id = "spring/liquibase"
-version = "1.0.0"
+version = "1.0.1"
 name = "Liquibase migration Process"
 optional = true
 
