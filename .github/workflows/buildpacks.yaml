@@ -17,9 +17,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - id: setup-tools
-        uses: buildpacks/github-actions/setup-tools@v5.5.4
+        uses: buildpacks/github-actions/setup-tools@v5.8.10
       - id: setup-pack
-        uses: buildpacks/github-actions/setup-pack@v5.5.4
+        uses: buildpacks/github-actions/setup-pack@v5.8.10
       - id: package
         run: |
           #!/usr/bin/env bash
@@ -32,7 +32,7 @@ jobs:
           PACKAGE="${REPO}/$(echo "$BP_ID" | sed 's/\//_/g')"
           IMAGE_NAME=${PACKAGE}:${VERSION}
           
-          pack buildpack package --platform "linux/amd64" --publish ${IMAGE_NAME}
+          pack buildpack package --publish ${IMAGE_NAME}
           echo "bp_image_name=${IMAGE_NAME}" >> "$GITHUB_OUTPUT"
           echo "bp_package=${PACKAGE}" >> "$GITHUB_OUTPUT"
         shell: bash
